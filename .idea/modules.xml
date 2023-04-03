@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/ClientForum/ClientForum.iml" filepath="$PROJECT_DIR$/ClientForum/ClientForum.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MiniProjetSys.iml" filepath="$PROJECT_DIR$/MiniProjetSys.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ServeurSys/ServeurSys.iml" filepath="$PROJECT_DIR$/ServeurSys/ServeurSys.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Serveur_Forum/Serveur_Forum.iml" filepath="$PROJECT_DIR$/Serveur_Forum/Serveur_Forum.iml" />
+    </modules>
+  </component>
+</project>
