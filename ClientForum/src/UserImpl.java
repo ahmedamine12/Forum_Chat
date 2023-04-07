@@ -7,9 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.*;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+
 
 public class UserImpl extends UnicastRemoteObject implements User, ActionListener {
     private Forum forum;
@@ -52,29 +50,7 @@ public class UserImpl extends UnicastRemoteObject implements User, ActionListene
     public void actionPerformed(ActionEvent e) {
     	//e.getSource().equals(menuBar.getMenu(0))
     	System.out.println(e.getSource().toString());
-    	if(e.getSource()==qui) {
-    		try {
-				JOptionPane.showMessageDialog(frame,forum.qui());
-			} catch (HeadlessException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (RemoteException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-    	}
-    	else if(e.getSource()==quitter) {
-    		try {
-    			//forum.quiter(id);
-    			//JOptionPane.showMessageDialog(frame,"user: "+id+" a quitt�");
-                	System.out.println("Qui menu item clicked");
-
-    			} catch (HeadlessException e1) {
-    				// TODO Auto-generated catch block
-    				e1.printStackTrace();
-    			}
-    	}
-    	else if (e.getSource() == enterButton) {
+    	 if (e.getSource() == enterButton) {
             try {
                 // Call the 'entrer' method on the server to connect the user to the forum
                 id = forum.entrer(getProxy());
@@ -96,7 +72,8 @@ public class UserImpl extends UnicastRemoteObject implements User, ActionListene
         }
     }
 
-    public void buildGUI() throws RemoteException {
+    public void buildGUI() throws RemoteException
+    {
 
         // Create the main frame
         frame = new JFrame("Forum - User");
@@ -106,8 +83,8 @@ public class UserImpl extends UnicastRemoteObject implements User, ActionListene
         // Create a JMenuBar
         menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("Options");
-        fileMenu.setForeground(Color.BLACK);
-        fileMenu.setBackground(Color.BLACK);
+        fileMenu.setForeground(Color.BLUE);
+        fileMenu.setBackground(new Color(66, 139, 202)); // Use a shade of blue that complements the chat area
 
         JMenuItem quiItem = new JMenuItem("Qui?");
         quiItem.addActionListener(new ActionListener() {
@@ -155,19 +132,21 @@ public class UserImpl extends UnicastRemoteObject implements User, ActionListene
 
         inputField = new JTextField(100);
         inputField.setPreferredSize(new Dimension(400, 30));
-
         inputField.setFont(new Font("Arial", Font.BOLD, 13));
-        inputField.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        inputField.setMargin(new Insets(5, 5, 5, 5));
+        inputField.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5)); // Add padding to the input field
         inputField.setToolTipText("Type your message here");
         inputField.addActionListener(this);
 
-        enterButton = new JButton("Enter");
-        enterButton.addActionListener(this);
+
 
         JPanel inputPanel = new JPanel(new BorderLayout());
+        inputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Add padding to the panel
         inputPanel.add(inputField, BorderLayout.CENTER);
-        JButton envoyerButton = new JButton("Envoyer");
+        JButton envoyerButton = new JButton();
+        ImageIcon sendIcon = new ImageIcon("assets/send-message.png");
+        Image sendImage = sendIcon.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
+        ImageIcon smallSendIcon = new ImageIcon(sendImage);
+        envoyerButton.setIcon(smallSendIcon);
         envoyerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -187,7 +166,7 @@ public class UserImpl extends UnicastRemoteObject implements User, ActionListene
         enterFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         JPanel enterPanel = new JPanel(new BorderLayout());
 
-        JLabel label = new JLabel("Click the 'Enter' button to join the chat!");
+        JLabel label = new JLabel("Cliquer sur 'entrer' pour participer au chat");
         label.setHorizontalAlignment(JLabel.CENTER);
 
         enterButton = new JButton("Enter");
