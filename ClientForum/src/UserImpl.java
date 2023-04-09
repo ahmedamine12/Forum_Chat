@@ -3,6 +3,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.rmi.*;
 import java.rmi.server.UnicastRemoteObject;
 
@@ -18,7 +20,8 @@ public class UserImpl extends UnicastRemoteObject implements User, ActionListene
     private JMenuBar menuBar;
     private JMenu qui;
     private JMenu quitter;
-    public UserImpl(Forum forum) throws RemoteException {
+    public UserImpl(Forum forum) throws RemoteException
+    {
         this.forum = forum;
         buildGUI();
     }
@@ -103,14 +106,17 @@ public class UserImpl extends UnicastRemoteObject implements User, ActionListene
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    forum.quiter(id);
-                    JOptionPane.showMessageDialog(frame, "user: " + id + " confirmer votre operation");
-                    enterFrame.setVisible(true);
-                    frame.setVisible(false);
+                    int choice = JOptionPane.showOptionDialog(frame, "user: " + id + " confirmer votre operation", "Confirmation", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+                    if (choice == JOptionPane.OK_OPTION) {
+                        forum.quiter(id);
+                        enterFrame.setVisible(true);
+                        frame.setVisible(false);
+                    }
                 } catch (HeadlessException | RemoteException ex) {
                     ex.printStackTrace();
                 }
             }
+
         });
 
         fileMenu.add(quiItem);
@@ -200,10 +206,23 @@ public class UserImpl extends UnicastRemoteObject implements User, ActionListene
         label.setHorizontalAlignment(JLabel.CENTER);
         label.setFont(INPUT_FONT);
         enterButton = new JButton("Enter");
-        enterButton.addActionListener(this);
+
         enterButton.setFont(INPUT_FONT);
+        enterButton.setBackground(new Color(66, 139, 202)); // Change the background color to a shade of blue that complements the chat area
+        enterButton.setForeground(Color.WHITE); // Set
+        enterButton.addActionListener(this);
+
         enterPanel.add(label, BorderLayout.CENTER);
         enterPanel.add(enterButton, BorderLayout.SOUTH);
+        enterButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                enterButton.setBackground(new Color(100, 149, 237));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                enterButton.setBackground(new Color(66, 139, 202));
+            }
+        });
 
 // Add the enter panel to the enterFrame
         enterFrame.add(enterPanel, BorderLayout.SOUTH);
@@ -213,11 +232,28 @@ public class UserImpl extends UnicastRemoteObject implements User, ActionListene
         enterFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         enterFrame.setVisible(true);
 
-
+        frame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                try {
+                    int choice = JOptionPane.showOptionDialog(frame, "user: " + id + " confirmer votre operation", "Confirmation", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+                    if (choice == JOptionPane.OK_OPTION)
+                    {
+                        forum.quiter(id);
+                        enterFrame.setVisible(true);
+                        frame.setVisible(false);
+                    }
+                } catch (HeadlessException | RemoteException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
         // Set the frame size and visibility
         frame.setSize(600, 400);
         frame.setLocationRelativeTo(null);
 
     }
 
+    public void setId(int id) {
+        this.id=id ;
+    }
 }

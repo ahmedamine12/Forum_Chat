@@ -33,6 +33,8 @@ public class ForumImpl extends UnicastRemoteObject implements Forum {
     }
 
     public void quiter(int id) throws RemoteException {
-        users.remove(id);
+        if (id >= 0 && id < users.size()) {
+            users.remove(id);
+        }
     }
 }
