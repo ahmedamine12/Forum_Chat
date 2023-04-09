@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Serveur_Forum:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Serveur_Forum_jar</output-path>
+    <root id="archive" name="Serveur_Forum.jar">
+      <element id="module-output" name="Serveur_Forum" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="ClientForum:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ClientForum_jar</output-path>
+    <root id="archive" name="ClientForum.jar">
+      <element id="module-output" name="ClientForum" />
+    </root>
+  </artifact>
+</component>
